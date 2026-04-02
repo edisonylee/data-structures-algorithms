@@ -1,18 +1,23 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        left = 0
-        longest = 0
-        substring_set = set()
-        for right in range(len(s)):
-            while s[right] in substring_set:
-                substring_set.remove(s[left])
-                left += 1
-            substring_set.add(s[right])
-            longest = max(longest, right - left + 1)
-        return longest
-        
-# So, if the string has found a duplicate, that means that we can get the length of the string (right - left)
-# And with that, we can compare the two strings. 
-
-# Can we just compare the strings without appending two different strings?
-# Maybe, but first let's just make the two strings
+        # Given a string s, find the length of the longest substring without duplicating characters.
+        # A substring is a contiguous non-empty sequence of characters within a string
+        ans = 0 # ans - length of the longest substring
+        hashSet = set()
+        curr = 0
+        begin = 0
+        if len(s) == 0:
+            return 0
+        for chr in s: # loop through s
+            if chr in hashSet:
+                while chr !=  s[begin]:
+                    hashSet.remove(s[begin])
+                    begin += 1
+                begin += 1
+                # [1,2,3, 4,3,5,6,7,8,9,10,11,12,13]
+            else:
+                hashSet.add(chr)
+            if curr - begin > ans:
+                ans = curr - begin
+            curr += 1
+        return ans + 1
